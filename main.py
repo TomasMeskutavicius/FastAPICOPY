@@ -6,6 +6,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import os
 import uvicorn
+import asyncio
 
 app = FastAPI()
 
@@ -361,4 +362,7 @@ def delete_db(Name: str):
     os.remove(Name)
 
 
-uvicorn.run(app, port=8080, host="0.0.0.0")
+if __name__ == "__main__":
+    config = uvicorn.Config(app, host="0.0.0.0", port=8080)
+    server = uvicorn.Server(config)
+    asyncio.run(server.serve())
